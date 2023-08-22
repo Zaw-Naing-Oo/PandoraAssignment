@@ -1,7 +1,7 @@
 import { DataTypes } from 'sequelize';
 import sequelize from '../config/database.js';
 
-const Post = sequelize.define('Post', {
+const Post = sequelize.define('Posts', {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
@@ -19,7 +19,7 @@ const Post = sequelize.define('Post', {
     type: DataTypes.INTEGER,
     allowNull: false,
     references: {
-      model: 'User', // This should match the name of your User model
+      model: 'Users', // This should match the name of your User model
       key: 'id',     // This should match the primary key of the User model
     },
   },

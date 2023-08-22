@@ -4,6 +4,7 @@ import bodyParser from 'body-parser';
 import dotenv from "dotenv"
 import sequelize from './config/database.js';
 import authRouter from "./routes/auth-route.js"
+import postRouter from "./routes/post-route.js"
 
 
 const app = express();
@@ -16,18 +17,19 @@ app.get("/", (req, res) => {
     res.send("Hello World!");
 })
 app.use("/user", authRouter);
+app.use("/post", postRouter);
 
 const PORT = 8000;
 
 
 // Sync models with the database
 sequelize.sync({ force: false }).then(() => {
-    console.log('Database synced');
-  
-    // Start the server
-    app.listen(PORT, () => {
-      console.log(`Server is running on port ${PORT}`);
-    });
-  }).catch(error => {
-    console.error('Database connection error:', error);
+  console.log('Database synced');
+
+  // Start the server
+  app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
   });
+}).catch(error => {
+  console.error('Database connection error:', error);
+});
