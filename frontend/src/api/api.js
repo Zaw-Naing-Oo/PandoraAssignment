@@ -14,3 +14,6 @@ export const signUp = (data) => API.post("/user/register", data, {
         "Content-Type": "application/json"
     }
 });
+
+export const createPost = (data) => API.post("/post/addPost", data);
+export const updatePost = (id, data) => API.patch(`/addPostOrEdit/${id}`, data);
