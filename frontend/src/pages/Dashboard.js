@@ -20,6 +20,7 @@ import { getPostsByUser } from '../api/api';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import { setUserPosts } from '../features/PostSlice';
+import { useDeletePostMutation } from '../react-query/query';
 
 
 const Dashboard = () => {
@@ -27,6 +28,8 @@ const Dashboard = () => {
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('md'));
     const dispatch = useDispatch();
+
+    const { deleteMutation, isLoading: deleteLoading } = useDeletePostMutation()
 
     // const queryClient = useQueryClient();
     const { id: userId } = useParams();
@@ -51,6 +54,18 @@ const Dashboard = () => {
     }, [data, dispatch]);
 
     const posts = useSelector((state) => state?.posts?.userPosts);
+
+    const handleDelete = async (postId) => {
+        if(window.confirm("Are you sure to delete")) {
+            try {
+                console.log(postId)
+                await deleteMutation.mutateAsync(postId);
+                toast.success("Post Delete Successfully")
+              } catch (error) {
+                console.error('Error deleting post:', error);
+              }
+          }
+    }
 
     
   return (
@@ -93,10 +108,13 @@ const Dashboard = () => {
                 { post?.content }
               </Typography>
               <Box sx={{ display: "flex", marginTop: 1, paddingX: isMobile ? 0 : 2,}}>
-                <IconButton aria-label="delete" size='small' color="error" sx={{ padding : 0, marginRight: 1}} 
-                // onClick = { () => handleDelete(tour?._id)}
+                <IconButton aria-label="delete" size='small'
+                  color="error" 
+                  sx={{ padding : 0, marginRight: 1}} 
+                  onClick = { () => handleDelete(post?.id)}
+                  disabled={deleteLoading}
                 >
-                  <DeleteIcon />
+                   <DeleteIcon />
                 </IconButton>
                 <Link to={`/tours/createOrEdit/${post?._id}`}>
                   <IconButton  size='small' sx={{ padding : 0, color: "#00897b"}}>

@@ -8,6 +8,6 @@ router.post("/addPost", addPost);
 // router.post("/addOrEdit/:id", updatePost);
 router.get("/postDetail/:id", getPostById);
 router.get("/dashboard/:id", getPostsByUser);
-router.post("/dashboard/:id", deletePost);
+router.delete("/dashboard/:id", deletePost);
 
 export default router;
