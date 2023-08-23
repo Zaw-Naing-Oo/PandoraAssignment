@@ -173,6 +173,7 @@ function Navbar() {
                   sx={{ color: 'white', display: 'block' }}
                     onClick={() => {
                       disaptch(logout());
+                      navigate("/");
                     }}
                     >
                     Logout

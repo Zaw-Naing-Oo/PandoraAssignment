@@ -29,10 +29,7 @@ const AddPost = () => {
     const user = JSON.parse(localStorage.getItem("profile"));
     const userId = user?.id;
 
-    const oldPostData = null
-
     const createMutation = useCreatePostMutation();
-    const updateMutation = useUpdatePostMutation();
 
     const schema = yup.object({
         title: yup
@@ -56,16 +53,10 @@ const AddPost = () => {
         console.log(data);
         const newPost = {...data, userId}
         try {
-            if (oldPostData) {
-                // Update post
-                // await updateMutation.mutateAsync({ id: postData.id, data });
-                toast.success('Post updated successfully');
-            } else {
-                // Create post
-                await createMutation.mutateAsync(newPost);
-                toast.success('Post created successfully');
-                navigate("/");
-            }
+           // Create post
+            await createMutation.mutateAsync(newPost);
+            toast.success('Post created successfully');
+            navigate("/");
             reset(); 
         } catch (error) {
             console.error('Something was wrong:', error);
@@ -78,7 +69,6 @@ const AddPost = () => {
         <Box sx={{margin: 'auto', maxWidth: 600, padding: isMobile ? 6 : 7, }}>
 
         <Typography variant="h1" align="center"  gutterBottom sx={{ marginBottom: "2rem", fontStyle: "oblique"}}>
-            {/* { id ? "Update You Post" : "Share Your Experience"} */}
             Share Your Experience
         </Typography>
         
@@ -117,19 +107,8 @@ const AddPost = () => {
                     type="submit"
                     className='me-3'
                 >
-                    {/* { id ? 
-                    updateTourMutation.isLoading ? "Updating..." : "Update"   
-                    : 
-                    createTourMutation.isLoading ? "Creating..." : "Create" } */}
-                    create
+                    create Post
                 </Button>
-                {/* <Button
-                    variant="contained"
-                    color="error"
-                    onClick={handleClear}
-                >
-                    Clear
-                </Button> */}
                 </Grid>
             </Grid>
             </Paper>

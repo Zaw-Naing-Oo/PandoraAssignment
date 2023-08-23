@@ -3,14 +3,14 @@ import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
 
 export const addPost = async (req, res) => {
-    const { title, content } = req.body;
-    const userId = req.user.userId; // Assuming you're using JWT middleware to extract user information
+  console.log(req.body);
+    const { title, description, userId } = req.body;
 
     try {
         // Create a new post
         const newPost = await Post.create({
           title,
-          content,
+          content : description,
           userId, // Assign the user ID to the post
         });
     

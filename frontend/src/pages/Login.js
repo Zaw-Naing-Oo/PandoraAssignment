@@ -113,11 +113,11 @@ const Login = () => {
           variant="contained"
           sx={{ mt: 3, mb: 2 }}
         >
-          Sign Up
+          Sign In
         </Button>
         <Box sx={{ display: "flex", justifyContent: "flex-end", alignItems: "center"}}>
           <Typography component='p'>Don't you have an account?</Typography>
-          <Link to="/register">&nbsp;Sign In</Link>
+          <Link to="/register">&nbsp;Sign Up</Link>
         </Box>
       </Box>
     </Box>
