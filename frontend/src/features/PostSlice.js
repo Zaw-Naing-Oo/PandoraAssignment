@@ -1,21 +1,20 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
-  posts: [],
+  userPosts: [],
 }
 
 export const PostSlice = createSlice({
   name: 'posts',
   initialState,
   reducers: {
-    setPost: (state, action) => {
-        console.log(action.payload);
-        state.posts = [...state.posts, action.payload]
+    setUserPosts: (state, action) => {
+      state.userPosts = action.payload; // Update the posts array with new user posts
     },
 },
 })
 
 // Action creators are generated for each case reducer function
-export const { setPost } = PostSlice.actions
+export const { setUserPosts } = PostSlice.actions
 
 export default PostSlice.reducer

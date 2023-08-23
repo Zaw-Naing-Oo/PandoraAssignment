@@ -1,6 +1,7 @@
 import Post from "../models/Post.js";
 import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
+import User from "../models/User.js";
 
 export const addPost = async (req, res) => {
   console.log(req.body);
@@ -47,6 +48,23 @@ export const getAllPosts = async (req, res) => {
       res.status(200).json({ post });
     } catch (error) {
       res.status(500).json({ message: 'An error occurred', error: error.message });
+    }
+  };
+
+  export const getPostsByUser = async (req, res) => {
+    const { id } = req.params;
+  
+    try {
+      const user = await User.findByPk(id); // Find the user by primary key
+  
+      if (!user) {
+        return res.status(404).json({ message: 'User does not exist' });
+      }
+  
+      const userPosts = await Post.findAll({ where: { userId: id } });
+      return res.status(200).json({ userPosts });
+    } catch (error) {
+      res.status(500).json({ message: 'Server Error' });
     }
   };
 
