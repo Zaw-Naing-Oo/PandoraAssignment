@@ -116,7 +116,7 @@ const Dashboard = () => {
                 >
                    <DeleteIcon />
                 </IconButton>
-                <Link to={`/tours/createOrEdit/${post?._id}`}>
+                <Link to={`/post/editPost/${post?.id}`}>
                   <IconButton  size='small' sx={{ padding : 0, color: "#00897b"}}>
                     <EditIcon />
                   </IconButton>

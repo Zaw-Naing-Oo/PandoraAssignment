@@ -10,6 +10,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import Navbar from "./pages/Navbar";
 import PostDetail from "./pages/PostDetail";
 import Dashboard from "./pages/Dashboard";
+import EditPost from "./pages/EditPost";
 
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
       <Route path="/post/addPost" element={ <AddPost /> } />
       <Route path="/post/postDetail/:id" element={ <PostDetail /> } />
       <Route path="/post/dashboard/:id" element={ <Dashboard /> } />
+      <Route path="/post/editPost/:id" element={ <EditPost /> } />
       <Route path="/login" element={ <Login /> } />
       <Route path="/register" element={ <Register /> } />
      </Routes>

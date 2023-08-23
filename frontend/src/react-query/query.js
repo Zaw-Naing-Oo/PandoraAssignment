@@ -11,7 +11,6 @@ export const useCreatePostMutation = () => {
 export const useDeletePostMutation = () => {
   const dispatch = useDispatch();
   const userPosts = useSelector(state => state?.posts?.userPosts);
-  console.log(userPosts)
   
   const deleteMutation = useMutation(async (postId) => {
       await deletePost(postId);
@@ -27,5 +26,5 @@ export const useDeletePostMutation = () => {
 
 
   export const useUpdatePostMutation = () => {
-    return useMutation(({ id, data }) => updatePost(id, data));
+    return useMutation(({ postId, data }) => updatePost(postId, data));
   };

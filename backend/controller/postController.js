@@ -90,7 +90,7 @@ export const getAllPosts = async (req, res) => {
 
   export const updatePost = async (req, res) => {
     const postId = req.params.id; // Get the post ID from the URL parameter
-    const { title, content } = req.body;
+    const { title, description } = req.body;
   
     try {
       // Find the post by its ID
@@ -102,7 +102,7 @@ export const getAllPosts = async (req, res) => {
   
       // Update the post
       post.title = title;
-      post.content = content;
+      post.content = description;
       await post.save();
   
       res.status(200).json({ message: 'Post updated successfully', post });

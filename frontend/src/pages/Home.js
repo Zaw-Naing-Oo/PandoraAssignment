@@ -17,7 +17,6 @@ const Home = () => {
   })
 
 
-   console.log(data)
    const posts = data?.data?.posts;
 
   if (isError) {

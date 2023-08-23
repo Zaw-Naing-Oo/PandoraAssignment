@@ -12,7 +12,9 @@ import { useTheme } from '@mui/material/styles';
 import * as yup from "yup"
 import { useForm } from "react-hook-form"
 import { yupResolver } from '@hookform/resolvers/yup';
-import { useCreatePostMutation, useUpdatePostMutation } from '../react-query/query';
+import { useUpdatePostMutation } from '../react-query/query';
+import { getPost } from '../api/api';
+import { useQuery } from '@tanstack/react-query';
 
 
 
@@ -20,18 +22,23 @@ import { useCreatePostMutation, useUpdatePostMutation } from '../react-query/que
 // import { getTourToEdit } from '../redux/api';
 // import { useCreateTourMutation, useUpdateTourMutation } from '../react-query/query';
 
-const AddPost = () => {
+const EditPost = () => {
 
     const navigate = useNavigate();
+    const { id : postId} = useParams();
 
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('md'));
     const user = JSON.parse(localStorage.getItem("profile"));
-    // console.log(user)
-    const userId = user?.id;
-    const username = user?.username
 
-    const createMutation = useCreatePostMutation();
+    const { isLoading, isError, data, error } = useQuery({  
+        queryKey: ['post'],
+        queryFn:  () => getPost(postId),
+      })
+    const existingPost = data?.data?.post;
+
+    const updateMutation = useUpdatePostMutation();
+
 
     const schema = yup.object({
         title: yup
@@ -46,17 +53,18 @@ const AddPost = () => {
       const { register, reset, handleSubmit, formState: { errors } } = useForm({
         resolver: yupResolver(schema),
         defaultValues: {
-            title: "",
-            description: "",
+            title: existingPost?.title || "",
+            description: existingPost?.content || "",
         },
       });
 
       const onSubmit = async (data) => {
-        const newPost = {...data, userId, username}
+        console.log(data);
         try {
            // Create post
-            await createMutation.mutateAsync(newPost);
-            toast.success('Post created successfully');
+           console.log(data);
+            await updateMutation.mutateAsync({ data, postId });
+            toast.success('Post Update successfully');
             reset(); 
             navigate("/");
         } catch (error) {
@@ -65,12 +73,25 @@ const AddPost = () => {
         }
       };
 
+      useEffect(() => {
+        if (existingPost) {
+          reset({
+            title: existingPost.title || "",
+            description: existingPost.content || "",
+          });
+        }
+      }, [existingPost, reset]);
+
+      if (isLoading) {
+        return <div>Loading...</div>;
+      } 
+
   return (
     <Box sx={{ minHeight: "100vh" }}>
         <Box sx={{margin: 'auto', maxWidth: 600, padding: isMobile ? 6 : 7, }}>
 
         <Typography variant="h1" align="center"  gutterBottom sx={{ marginBottom: "2rem", fontStyle: "oblique"}}>
-            Add Post
+            Update Post
         </Typography>
         
        <Box component="form" onSubmit={handleSubmit(onSubmit)} >
@@ -83,6 +104,7 @@ const AddPost = () => {
                         type="text"
                         label="Title"
                         {...register('title')}
+                        defaultValue={existingPost?.title || ""}
                     />
                     {errors.title && (
                         <Typography variant='caption' color="red" sx={{ lineHeight: 0, marginBottom: "0.5rem"}}>{errors.title.message}</Typography>
@@ -96,6 +118,7 @@ const AddPost = () => {
                         label="Description"
                         rows={2}
                         {...register('description')}
+                        defaultValue={existingPost?.content || ""}
                     />
                     {errors.description && (
                         <Typography variant='caption' color="red" sx={{ lineHeight: 0, marginBottom: "0.5rem"}}>{errors.description.message}</Typography>
@@ -108,7 +131,7 @@ const AddPost = () => {
                     type="submit"
                     className='me-3'
                 >
-                    create Post
+                    Update Post
                 </Button>
                 </Grid>
             </Grid>
@@ -119,4 +142,4 @@ const AddPost = () => {
   )
 }
 
-export default AddPost
+export default EditPost
