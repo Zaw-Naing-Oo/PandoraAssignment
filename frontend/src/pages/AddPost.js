@@ -27,7 +27,9 @@ const AddPost = () => {
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('md'));
     const user = JSON.parse(localStorage.getItem("profile"));
+    // console.log(user)
     const userId = user?.id;
+    const username = user?.username
 
     const createMutation = useCreatePostMutation();
 
@@ -51,7 +53,7 @@ const AddPost = () => {
 
       const onSubmit = async (data) => {
         console.log(data);
-        const newPost = {...data, userId}
+        const newPost = {...data, userId, username}
         try {
            // Create post
             await createMutation.mutateAsync(newPost);

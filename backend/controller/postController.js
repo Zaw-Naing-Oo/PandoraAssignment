@@ -4,13 +4,15 @@ import jwt from "jsonwebtoken"
 
 export const addPost = async (req, res) => {
   console.log(req.body);
-    const { title, description, userId } = req.body;
+    const { title, description, userId, username } = req.body;
+    
 
     try {
         // Create a new post
         const newPost = await Post.create({
           title,
           content : description,
+          username,
           userId, // Assign the user ID to the post
         });
     

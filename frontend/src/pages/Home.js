@@ -18,9 +18,14 @@ const Home = () => {
 
 
    console.log(data)
+   const posts = data?.data?.posts;
 
   if (isError) {
     return <span>Error: {error.message}</span>
+  }
+
+  if(posts?.length === 0){
+    return <p>No posts</p>
   }
 
   return (
@@ -35,7 +40,7 @@ const Home = () => {
         </Grid>
       ) : (
         <Grid container spacing={4}>
-          {data?.data?.posts.map((post) => (
+          {posts.map((post) => (
             <Grid key={post.id} item xs={12} sm={6} md={4} lg={3}>
                <SingleCard post={post} />
           </Grid>

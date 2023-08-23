@@ -15,6 +15,10 @@ const Post = sequelize.define('Posts', {
     type: DataTypes.TEXT,
     allowNull: false,
   },
+  username: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
   userId: { // This is the foreign key referencing User's id
     type: DataTypes.INTEGER,
     allowNull: false,
