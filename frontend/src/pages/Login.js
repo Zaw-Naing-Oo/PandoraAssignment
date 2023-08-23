@@ -45,7 +45,8 @@ const Login = () => {
     onSuccess: async (data) => {
       console.log(data);
       const { username, email, id } = data?.data?.user
-      const userInfo = { username, email, id };
+      const token = data?.data?.token
+      const userInfo = { username, email, id, token };
       dispatch(setUser(userInfo));
       toast.success('Login Successfully');
       navigate('/');

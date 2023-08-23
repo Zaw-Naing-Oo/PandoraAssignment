@@ -22,8 +22,10 @@ export const register =  async (req,res) => {
           email,
           password: hashedPassword,
         });
-  
-        res.status(201).json({ message: 'User registered successfully', user: newUser });
+
+        const token = jwt.sign({ id: newUser.id, email: newUser.email }, process.env.SECRET, { expiresIn: '1h' });
+
+        res.status(201).json({ message: 'User registered successfully', user: newUser, token });
       } catch (error) {
         res.status(500).json({ message: 'An error occurred', error: error.message });
       }
@@ -48,7 +50,7 @@ export const login =  async (req,res) => {
           }
     
           // Create a JWT token for the user
-        const token = jwt.sign({ userId: user.id }, 'your-secret-key', { expiresIn: '1h' });
+        const token = jwt.sign({ id: user.id, email: user.email }, process.env.SECRET, { expiresIn: '1h' });
   
         res.status(200).json({ message: 'Login successful', token, user });
       } catch (error) {

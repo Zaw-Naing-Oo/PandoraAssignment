@@ -52,7 +52,7 @@ const AddPost = () => {
       });
 
       const onSubmit = async (data) => {
-        const newPost = {...data, userId, username}
+        const newPost = {...data, username}
         try {
            // Create post
             await createMutation.mutateAsync(newPost);

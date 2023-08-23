@@ -4,9 +4,8 @@ import jwt from "jsonwebtoken"
 import User from "../models/User.js";
 
 export const addPost = async (req, res) => {
-  console.log(req.body);
-    const { title, description, userId, username } = req.body;
-    
+    const { title, description, username } = req.body;
+    const userId = req.userId;
 
     try {
         // Create a new post

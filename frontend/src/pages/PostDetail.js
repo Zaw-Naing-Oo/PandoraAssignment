@@ -29,7 +29,6 @@ const PostDetail = () => {
     queryFn:  () => getPost(postId),
   })
 
-  console.log(data)
   const post = data?.data?.post;
 
   return (
