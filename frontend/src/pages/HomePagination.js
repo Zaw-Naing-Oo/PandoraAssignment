@@ -19,7 +19,7 @@ const HomePagination = () => {
     keepPreviousData: true,
   });
 
-  console.log(data)
+  // console.log(data)
 
   const posts = data?.data?.posts;
   const hasMore = data?.data?.hasMore;

@@ -61,7 +61,7 @@ const EditPost = () => {
       const onSubmit = async (data) => {
         console.log(data);
         try {
-           // Create post
+           // update post
            console.log(data);
             await updateMutation.mutateAsync({ data, postId });
             toast.success('Post Update successfully');

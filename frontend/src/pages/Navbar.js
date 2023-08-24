@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -16,13 +16,13 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import { useNavigate } from "react-router-dom"
-import { useDispatch, useSelector } from 'react-redux';
-import { styled, alpha, useTheme } from '@mui/material/styles';
+import { useDispatch } from 'react-redux';
+import { useTheme } from '@mui/material/styles';
+import decode from "jwt-decode"
 
 
 // icons
 import TravelExploreIcon from '@mui/icons-material/TravelExplore';
-import SearchIcon from '@mui/icons-material/Search';
 import MenuIcon from '@mui/icons-material/Menu';
 import AddIcon from '@mui/icons-material/Add';
 import DashboardIcon from '@mui/icons-material/Dashboard';
@@ -34,28 +34,28 @@ import { logout } from '../features/UserSlice';
 
 
 function Navbar() {
+
+  const [state, setState] = useState({
+    left: false,
+  });
+
   const navigate = useNavigate();
   const disaptch = useDispatch();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
-//   const searchInputRef = useRef(null);
 
 
   const user = JSON.parse(localStorage.getItem("profile"))
 
   const userId = user?.id;
-//   const token = user?.token;
+  const token = user?.token;
   
-//   if(token) {
-//     const decodeToken = decode(token);
-//     if(decodeToken.exp * 1000 < new Date().getTime()) {
-//       disaptch(logout())
-//     }
-//   }
-
-  const [state, setState] = useState({
-    left: false,
-  });
+  if(token) {
+    const decodeToken = decode(token);
+    if(decodeToken.exp * 1000 < new Date().getTime()) {
+      disaptch(logout())
+    }
+  }
 
   /* Drawer for keyboard */
   const toggleDrawer = (open) => (event) => {
