@@ -11,6 +11,7 @@ import Navbar from "./pages/Navbar";
 import PostDetail from "./pages/PostDetail";
 import Dashboard from "./pages/Dashboard";
 import EditPost from "./pages/EditPost";
+import HomePagination from "./pages/HomePagination";
 
 
 function App() {
@@ -23,7 +24,8 @@ function App() {
      {location.pathname !== '/login' && location.pathname !== '/register' && <Navbar />}
      <Routes>
       <Route path="/" element={ <Navigate to="/post" /> } />
-      <Route path="/post" element={ <Home /> } />
+      {/* <Route path="/post" element={ <Home /> } /> */}
+      <Route path="/post" element={ <HomePagination /> } />
       <Route path="/post/addPost" element={ <AddPost /> } />
       <Route path="/post/postDetail/:id" element={ <PostDetail /> } />
       <Route path="/post/dashboard/:id" element={ <Dashboard /> } />
